@@ -32,6 +32,12 @@ dark theme (near-black + signal red, Cinzel display / Space Grotesk / Inter):
 - **Scroll progress bar**, parallax orbs and back-to-top (Scrolltide)
 - Fully responsive; `prefers-reduced-motion` is respected throughout.
 
+**v3.1 auth redesign (2026-10-24):** the login/register popup was rebuilt — aurora
+backdrop with glowing orbs, gradient-border glass card with a spring entrance,
+JK monogram header, glass input boxes with floating labels and left icons,
+show/hide password toggles, an error shake, a rotating close button, and a
+smoother login ↔ register slide.
+
 ## Security notes
 
 - All stored data is rendered with `textContent` (no `innerHTML` sinks) — project titles
