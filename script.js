@@ -522,3 +522,75 @@ $('#year').textContent = String(new Date().getFullYear());
 
 /* ---------------- init ---------------- */
 applyAuthUI();
+
+/* ---------------- premium v3 enhancements ----------------
+   Scroll progress, floating-header state, active-nav highlight,
+   animated stat counters, project-card spotlight, back-to-top.
+   All additive: CRUD/auth logic above is untouched. */
+(function premiumV3() {
+    const progress = $('#scrollProgress');
+    const header = $('#siteHeader');
+    const toTop = $('#toTop');
+    let ticking = false;
+
+    function onScroll() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        const y = window.scrollY || 0;
+        if (progress) progress.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+        if (header) header.classList.toggle('scrolled', y > 24);
+        if (toTop) toTop.hidden = y < 600;
+        ticking = false;
+    }
+    addEventListener('scroll', () => {
+        if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+    }, { passive: true });
+    onScroll();
+
+    if (toTop) toTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+
+    /* active nav link */
+    const navLinks = new Map();
+    document.querySelectorAll('[data-nav]').forEach((a) => navLinks.set(a.dataset.nav, a));
+    const navObserver = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+            if (e.isIntersecting && navLinks.has(e.target.id)) {
+                navLinks.forEach((a) => a.classList.remove('active'));
+                navLinks.get(e.target.id).classList.add('active');
+            }
+        }
+    }, { rootMargin: '-38% 0px -55% 0px' });
+    ['home', 'about', 'skills', 'projects', 'contact'].forEach((id) => {
+        const s = document.getElementById(id);
+        if (s) navObserver.observe(s);
+    });
+
+    /* animated counters */
+    const counters = document.querySelectorAll('.stat-num[data-count]');
+    const runCounter = (el) => {
+        const target = Number(el.dataset.count) || 0;
+        if (reduceMotion) { el.textContent = String(target); return; }
+        const start = performance.now(), dur = 1300;
+        (function tick(now) {
+            const t = Math.min((now - start) / dur, 1);
+            el.textContent = String(Math.round(target * (1 - Math.pow(1 - t, 3))));
+            if (t < 1) requestAnimationFrame(tick);
+        })(start);
+    };
+    const counterObserver = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+            if (e.isIntersecting) { runCounter(e.target); counterObserver.unobserve(e.target); }
+        }
+    }, { threshold: 0.5 });
+    counters.forEach((el) => counterObserver.observe(el));
+
+    /* project-card spotlight (event delegation — survives re-renders) */
+    grid.addEventListener('pointermove', (e) => {
+        const card = e.target.closest('.project-card');
+        if (!card) return;
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
+        card.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
+    });
+})();
