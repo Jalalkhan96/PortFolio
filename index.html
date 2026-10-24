@@ -7,47 +7,73 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Jalal Khan — Software Engineer (BS Software Engineering, COMSATS Abbottabad). Full-stack web apps, WhatsApp automation and developer tools.">
+    <meta name="theme-color" content="#070708">
     <title>Jalal Khan — Software Engineer | Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header>
-        <a class="Logo" href="#home">KHAN</a>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-            <span></span><span></span><span></span>
-        </button>
-        <nav class="navigation" id="mainNav">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
-            <span class="edit-badge" id="editBadge" hidden>Edit mode</span>
-            <button class="butlogin-popup" id="authBtn">Login</button>
-        </nav>
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+    <div class="aurora" aria-hidden="true">
+        <span class="orb orb-a"></span>
+        <span class="orb orb-b"></span>
+        <span class="orb orb-c"></span>
+        <span class="grid-lines"></span>
+    </div>
+
+    <header id="siteHeader">
+        <div class="header-inner">
+            <a class="Logo" href="#home">KHAN</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="navigation" id="mainNav">
+                <a href="#home" data-nav="home">Home</a>
+                <a href="#about" data-nav="about">About</a>
+                <a href="#skills" data-nav="skills">Skills</a>
+                <a href="#projects" data-nav="projects">Projects</a>
+                <a href="#contact" data-nav="contact">Contact</a>
+                <span class="edit-badge" id="editBadge" hidden>Edit mode</span>
+                <button class="butlogin-popup" id="authBtn">Login</button>
+            </nav>
+        </div>
     </header>
 
     <main>
         <!-- ============ HERO ============ -->
         <section class="hero" id="home">
+            <div class="hero-badge reveal"><span class="dot"></span> Open to software engineering roles &amp; freelance projects</div>
             <p class="hero-kicker reveal">Hello, I am</p>
-            <h1 class="hero-name reveal">Jalal Khan</h1>
+            <h1 class="hero-name reveal"><span class="gradient-text">Jalal Khan</span></h1>
             <h2 class="hero-role reveal"><span id="typedRole"></span><span class="caret" aria-hidden="true">|</span></h2>
             <p class="hero-sub reveal">BS Software Engineering, COMSATS University Abbottabad (2022–2026) · Abbottabad, Pakistan.
-                I build full-stack web apps, WhatsApp automation and developer tools.</p>
+                I build full-stack web apps, WhatsApp automation and developer tools — designed premium, engineered to ship.</p>
             <div class="hero-cta reveal">
-                <a class="btn-solid" href="#projects">View Projects</a>
-                <a class="btn-ghost" href="https://github.com/Jalalkhan96" target="_blank" rel="noopener">GitHub Profile</a>
+                <a class="btn-solid btn-gradient" href="#projects">View Projects <span aria-hidden="true">→</span></a>
+                <a class="btn-ghost btn-glass" href="https://github.com/Jalalkhan96" target="_blank" rel="noopener">GitHub Profile</a>
             </div>
-            <p class="hero-status reveal"><span class="dot"></span> Open to software engineering roles &amp; freelance projects</p>
+            <div class="hero-stats reveal" id="heroStats">
+                <div class="stat"><span class="stat-num" data-count="35">0</span><span class="stat-label">Public repos</span></div>
+                <div class="stat"><span class="stat-num" data-count="61">0</span><span class="stat-label">Languages in greeting-ninja</span></div>
+                <div class="stat"><span class="stat-num" data-count="6">0</span><span class="stat-label">Featured projects</span></div>
+                <div class="stat"><span class="stat-num" data-count="4">0</span><span class="stat-label">Years of BS Software Eng.</span></div>
+            </div>
         </section>
+
+        <!-- ============ TECH MARQUEE ============ -->
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <span>JavaScript</span><span>TypeScript</span><span>Node.js</span><span>Python</span><span>Flutter</span><span>Dart</span><span>PostgreSQL</span><span>Firebase</span><span>REST APIs</span><span>Git &amp; GitHub</span>
+                <span>JavaScript</span><span>TypeScript</span><span>Node.js</span><span>Python</span><span>Flutter</span><span>Dart</span><span>PostgreSQL</span><span>Firebase</span><span>REST APIs</span><span>Git &amp; GitHub</span>
+            </div>
+        </div>
 
         <!-- ============ ABOUT ============ -->
         <section class="section" id="about">
+            <p class="section-kicker reveal">About</p>
             <h2 class="section-title reveal">About Me</h2>
             <div class="about-grid">
                 <div class="about-text reveal">
@@ -67,35 +93,44 @@
                 </div>
                 <div class="about-media reveal">
                     <img src="pexels-pixabay-531880.jpg" alt="Jalal Khan's workspace" loading="lazy">
+                    <div class="media-chip">Abbottabad · Pakistan</div>
                 </div>
             </div>
         </section>
 
-        <!-- ============ SKILLS ============ -->
+        <!-- ============ SKILLS (bento) ============ -->
         <section class="section" id="skills">
+            <p class="section-kicker reveal">Expertise</p>
             <h2 class="section-title reveal">Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card reveal">
+            <div class="skills-grid bento">
+                <div class="skill-card reveal bento-wide">
+                    <div class="skill-icon" aria-hidden="true">&lt;/&gt;</div>
                     <h3>Languages</h3>
-                    <p>JavaScript, TypeScript, Python, Dart, Java, C/C++, HTML/CSS, SQL</p>
+                    <p>JavaScript, TypeScript, Python, Dart, Java, C/C++, HTML/CSS, SQL — chosen per problem, not per habit.</p>
+                    <div class="chip-row"><span>JavaScript</span><span>TypeScript</span><span>Python</span><span>Dart</span><span>SQL</span></div>
                 </div>
                 <div class="skill-card reveal">
+                    <div class="skill-icon" aria-hidden="true">⚙</div>
                     <h3>Web &amp; Backend</h3>
                     <p>Node.js, Express, REST APIs, PostgreSQL, Firebase</p>
                 </div>
                 <div class="skill-card reveal">
+                    <div class="skill-icon" aria-hidden="true">▣</div>
                     <h3>Mobile &amp; Desktop</h3>
                     <p>Flutter, Linux desktop tooling</p>
                 </div>
-                <div class="skill-card reveal">
-                    <h3>Tools</h3>
-                    <p>Git/GitHub, VS Code, Android Studio, Jupyter</p>
+                <div class="skill-card reveal bento-wide">
+                    <div class="skill-icon" aria-hidden="true">✦</div>
+                    <h3>Tools &amp; Workflow</h3>
+                    <p>Git/GitHub, VS Code, Android Studio, Jupyter — plus automation bots, scrapers and AI-assisted pipelines.</p>
+                    <div class="chip-row"><span>Git</span><span>GitHub</span><span>VS Code</span><span>Jupyter</span></div>
                 </div>
             </div>
         </section>
 
         <!-- ============ PROJECTS (CRUD) ============ -->
         <section class="section" id="projects">
+            <p class="section-kicker reveal">Selected work</p>
             <h2 class="section-title reveal">Featured Projects</h2>
 
             <div class="projects-toolbar reveal">
@@ -117,21 +152,38 @@
 
         <!-- ============ CONTACT ============ -->
         <section class="section" id="contact">
-            <h2 class="section-title reveal">Let&rsquo;s Connect</h2>
-            <p class="contact-sub reveal">Open for collaborations in web development, mobile apps, or anything creative. Let&rsquo;s build something amazing together.</p>
-            <div class="contact-links reveal">
-                <a href="mailto:jalalmjk96@gmail.com">Email</a>
-                <a href="https://github.com/Jalalkhan96" target="_blank" rel="noopener">GitHub</a>
-                <a href="https://www.linkedin.com/in/jalal-khan-b59444340/" target="_blank" rel="noopener">LinkedIn</a>
-                <a href="https://t.me/abixrealabix" target="_blank" rel="noopener">Telegram</a>
-                <a href="https://discord.com/users/itxabixofficial" target="_blank" rel="noopener">Discord</a>
+            <div class="contact-card reveal">
+                <p class="section-kicker">Contact</p>
+                <h2 class="section-title">Let&rsquo;s Connect</h2>
+                <p class="contact-sub">Open for collaborations in web development, mobile apps, or anything creative. Let&rsquo;s build something amazing together.</p>
+                <div class="contact-links">
+                    <a href="mailto:jalalmjk96@gmail.com">Email</a>
+                    <a href="https://github.com/Jalalkhan96" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://www.linkedin.com/in/jalal-khan-b59444340/" target="_blank" rel="noopener">LinkedIn</a>
+                    <a href="https://t.me/abixrealabix" target="_blank" rel="noopener">Telegram</a>
+                    <a href="https://discord.com/users/itxabixofficial" target="_blank" rel="noopener">Discord</a>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; <span id="year"></span> Jalal Khan — Code. Create. Conquer.</p>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <a class="Logo" href="#home">KHAN</a>
+                <p>Code. Create. Conquer.</p>
+            </div>
+            <nav class="footer-nav" aria-label="Footer">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <p class="footer-copy">&copy; <span id="year"></span> Jalal Khan — Built with plain HTML, CSS &amp; JavaScript. No build step, no tracking.</p>
+        </div>
     </footer>
+
+    <button class="to-top" id="toTop" aria-label="Back to top" hidden>↑</button>
 
     <!-- ============ AUTH POPUP (login / register) ============ -->
     <div class="overlay" id="authOverlay" hidden>
