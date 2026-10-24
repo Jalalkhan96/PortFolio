@@ -2,7 +2,8 @@
 
 Personal portfolio of **Jalal Khan**, Software Engineer (BS Software Engineering, COMSATS University Abbottabad, 2022–2026), Abbottabad, Pakistan.
 
-**Live site:** https://jalalkhan96.github.io/PortFolio/
+**Live site:** https://jalal-portfolio-jalals-projects-d0ca9121.vercel.app
+(GitHub Pages mirror: https://jalalkhan96.github.io/PortFolio/)
 
 ## What it is
 
@@ -22,7 +23,7 @@ A dependency-free static site (plain HTML, CSS and JavaScript — no build step)
 ## Premium design (v3, 2026-10-24)
 
 Redesigned using patterns from the **Design Resources 28** kit, adapted to the ABIX
-dark theme (near-black + signal red, Cinzel display / Space Grotesk / Inter):
+ABIX theme (near-black + signal red, Sora display / Space Grotesk / Inter):
 
 - **Floating glass pill navbar** with active-section highlighting (Navbar Gallery pattern)
 - **Aurora hero** — animated gradient name, drifting light orbs, grid backdrop (Aceternity / Text Effects)
@@ -63,3 +64,12 @@ Open `index.html` in a browser, or serve the folder:
 python3 -m http.server 8000
 # then visit http://localhost:8000
 ```
+
+**v3.2 dual theme (2026-10-24):** a full theme engine — the header sun/moon
+toggle switches between the **dark glass** theme and a new **white glass**
+theme (frosted white cards, soft aurora, dark-anchored gradient name). The
+choice is saved in `localStorage` (`jk_portfolio_theme`), applied before first
+paint by `theme-init.js` (no flash), and the first visit follows the visitor's
+OS dark/light preference. Display font upgraded from Cinzel to **Sora** for a
+modern geometric look; all surfaces (header, cards, modals, inputs, auth
+popup) are driven by CSS variables so both themes stay pixel-consistent.

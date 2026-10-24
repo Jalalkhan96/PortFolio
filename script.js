@@ -615,3 +615,16 @@ document.querySelectorAll('.pass-toggle').forEach((btn) => {
         input.focus();
     });
 });
+
+/* ---------------- v3.2: dark / white glass theme toggle ---------------- */
+(function () {
+    const btn = document.getElementById('themeToggle');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+        const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem('jk_portfolio_theme', next); } catch (e) { /* private mode */ }
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', next === 'light' ? '#edeff4' : '#070708');
+    });
+})();

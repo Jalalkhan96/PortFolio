@@ -11,7 +11,9 @@
     <title>Jalal Khan — Software Engineer | Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#070708">
+    <script src="theme-init.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -37,6 +39,10 @@
                 <a href="#projects" data-nav="projects">Projects</a>
                 <a href="#contact" data-nav="contact">Contact</a>
                 <span class="edit-badge" id="editBadge" hidden>Edit mode</span>
+                <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch dark / light theme" title="Dark / Light">
+                    <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm7.9-5.9 2.1 1.9-2.1 1.9v-1.2h-2.6a7.5 7.5 0 0 0 0-3.4h2.6V11.1zM4.1 10.1 2 12l2.1 1.9V12.7h2.6a7.5 7.5 0 0 1 0-3.4H4.1v.8zM13 2h-2v2.9a7.6 7.6 0 0 1 3.4 0L13 2zm-6.4 1.7L4.9 5.4l2 2A7.5 7.5 0 0 1 9 5.3L6.6 3.7zM19.1 5.4l-1.7-1.7-2.4 1.6a7.5 7.5 0 0 1 2.1 2.1l2-2zM11 22h2l-1.4-2.9a7.6 7.6 0 0 1-3.4 0L11 22zm6.4-1.7 1.7-1.7-2-2a7.5 7.5 0 0 1-2.1 2.1l2.4 1.6zM4.9 18.6l1.7 1.7L9 18.7a7.5 7.5 0 0 1-2.1-2.1l-2 2z"/></svg>
+                    <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+                </button>
                 <button class="butlogin-popup" id="authBtn">Login</button>
             </nav>
         </div>
