@@ -15,13 +15,22 @@ A dependency-free static site (plain HTML, CSS and JavaScript — no build step)
     *Add Project*, the per-card *Edit* / *Delete* buttons.
   - **Persistence** — projects are stored in the browser (`localStorage`), seeded with the
     six featured projects. *Export JSON* / *Import JSON* / *Reset Defaults* included.
-- **Login / Register popup** — the site's original login/register card, rebuilt: sliding
-  forms, local demo accounts (passwords stored only as SHA-256 hashes), "remember me"
-  sessions. Accounts live only in the visitor's own browser — this is a front-end demo,
-  there is no server.
-- **Theme & motion** — ABIX dark theme (near-black + signal red), Cinzel display font +
-  Inter body, typing effect in the hero, scroll-reveal animations, fully responsive,
-  and `prefers-reduced-motion` is respected.
+- **Login / Register popup** — sliding forms, local demo accounts (passwords stored only
+  as SHA-256 hashes), "remember me" sessions. Accounts live only in the visitor's own
+  browser — this is a front-end demo, there is no server.
+
+## Premium design (v3, 2026-10-24)
+
+Redesigned using patterns from the **Design Resources 28** kit, adapted to the ABIX
+dark theme (near-black + signal red, Cinzel display / Space Grotesk / Inter):
+
+- **Floating glass pill navbar** with active-section highlighting (Navbar Gallery pattern)
+- **Aurora hero** — animated gradient name, drifting light orbs, grid backdrop (Aceternity / Text Effects)
+- **Gradient CTA buttons** with shimmer sweep (Colorion Gradient Buttons)
+- **Bento skills grid**, tech marquee and animated stat counters (Magic UI patterns)
+- **Spotlight project cards** that glow under the cursor, liquid-glass modals (Glass / Microkit)
+- **Scroll progress bar**, parallax orbs and back-to-top (Scrolltide)
+- Fully responsive; `prefers-reduced-motion` is respected throughout.
 
 ## Security notes
 
@@ -35,8 +44,8 @@ A dependency-free static site (plain HTML, CSS and JavaScript — no build step)
 | File | Purpose |
 | --- | --- |
 | `index.html` | Page structure and content |
-| `style.css` | Theme, layout, animations |
-| `script.js` | Project CRUD store, auth, popup, typing + reveal effects |
+| `style.css` | Premium theme, layout, animations |
+| `script.js` | Project CRUD store, auth, popup, typing/reveal effects, premium v3 enhancements |
 | `pexels-pixabay-531880.jpg` | About-section photo |
 | `Deployment Link` | The live GitHub Pages URL |
 
@@ -48,4 +57,3 @@ Open `index.html` in a browser, or serve the folder:
 python3 -m http.server 8000
 # then visit http://localhost:8000
 ```
-
