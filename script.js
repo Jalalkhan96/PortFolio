@@ -366,6 +366,14 @@ function clearSession() {
 function setMsg(el, text, ok) {
     el.textContent = text;
     el.classList.toggle('ok', !!ok);
+    if (text && !ok) {
+        const wrapper = el.closest('.wrapper');
+        if (wrapper) {
+            wrapper.classList.remove('shake');
+            void wrapper.offsetWidth; // restart the animation
+            wrapper.classList.add('shake');
+        }
+    }
 }
 
 function applyAuthUI() {
@@ -594,3 +602,16 @@ applyAuthUI();
         card.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
     });
 })();
+
+/* ---------------- premium v3.1: show / hide password ---------------- */
+document.querySelectorAll('.pass-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+        const input = document.getElementById(btn.dataset.toggle);
+        if (!input) return;
+        const show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        btn.classList.toggle('on', show);
+        btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+        input.focus();
+    });
+});
