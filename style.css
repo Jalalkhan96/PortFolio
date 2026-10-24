@@ -370,54 +370,121 @@ footer { margin-top: clamp(60px, 9vw, 110px); border-top: 1px solid var(--line);
 }
 .to-top:hover { transform: translateY(-3px); border-color: var(--accent); }
 
-/* ---------- overlays: auth popup + project form (liquid glass) ---------- */
+/* ---------- overlays: auth popup + project form (premium v3.1) ---------- */
 .overlay {
     position: fixed; inset: 0; z-index: 200; display: flex; justify-content: center; align-items: center;
-    padding: 16px; background: rgba(3,3,5,.7); backdrop-filter: blur(8px);
+    padding: 16px;
+    background:
+        radial-gradient(760px 480px at 18% 12%, rgba(225,6,0,.20), transparent 60%),
+        radial-gradient(680px 460px at 85% 88%, rgba(255,122,24,.13), transparent 60%),
+        rgba(3,3,5,.74);
+    backdrop-filter: blur(12px) saturate(1.3);
+    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    opacity: 0; transition: opacity .35s ease;
 }
 .overlay[hidden] { display: none; }
+.overlay.open { opacity: 1; }
+
+/* glowing orbs behind the auth card */
+.auth-orbs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.auth-orb { position: absolute; border-radius: 50%; filter: blur(70px); }
+.auth-orb-a { width: 340px; height: 340px; left: calc(50% - 330px); top: calc(50% - 260px); background: rgba(225,6,0,.38); animation: drift 16s ease-in-out infinite alternate; }
+.auth-orb-b { width: 300px; height: 300px; right: calc(50% - 330px); bottom: calc(50% - 280px); background: rgba(255,122,24,.26); animation: drift 20s ease-in-out infinite alternate-reverse; }
+
 .wrapper {
-    position: relative; width: 400px; max-width: 100%; height: 480px;
-    background: linear-gradient(165deg, rgba(255,255,255,.09), rgba(20,20,25,.94) 40%);
-    border: 1px solid var(--line-strong); border-radius: 24px;
-    box-shadow: var(--shadow); backdrop-filter: blur(20px) saturate(1.4);
+    position: relative; width: 410px; max-width: 100%; height: 548px; max-height: calc(100vh - 32px);
+    background:
+        linear-gradient(168deg, rgba(28,28,34,.97), rgba(13,13,17,.98) 55%) padding-box,
+        linear-gradient(150deg, rgba(255,107,97,.75), rgba(255,255,255,.16) 40%, rgba(255,215,0,.4)) border-box;
+    border: 1.5px solid transparent; border-radius: 26px;
+    box-shadow: 0 34px 90px rgba(0,0,0,.68), 0 0 110px rgba(225,6,0,.16);
     display: flex; justify-content: center; align-items: center; overflow: hidden;
-    transform: scale(.92) translateY(10px); opacity: 0;
-    transition: transform .45s cubic-bezier(.22,1,.36,1), opacity .35s ease, height .25s ease;
+    transform: scale(.88) translateY(30px); opacity: 0;
+    transition: transform .55s cubic-bezier(.22,1.3,.36,1), opacity .35s ease, height .45s cubic-bezier(.22,1,.36,1);
 }
 .overlay.open .wrapper { transform: scale(1) translateY(0); opacity: 1; }
-.wrapper.active { height: 540px; }
-.wrapper.form-modal { height: auto; min-height: 0; width: 440px; }
+.wrapper.active { height: 628px; }
+.wrapper.form-modal {
+    height: auto; min-height: 0; width: 440px;
+    background: linear-gradient(168deg, rgba(28,28,34,.97), rgba(13,13,17,.98) 55%);
+    border: 1px solid var(--line-strong);
+}
+.wrapper.shake { animation: shake .5s ease; }
+@keyframes shake {
+    10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(2px); }
+    30%, 50%, 70% { transform: translateX(-5px); } 40%, 60% { transform: translateX(5px); }
+}
 .wrapper .icon-close {
     position: absolute; top: 0; right: 0; width: 46px; height: 46px;
     background: var(--grad); color: #fff; border: 0; display: flex; justify-content: center; align-items: center;
     border-bottom-left-radius: 22px; cursor: pointer; z-index: 2;
+    transition: transform .35s ease, filter .25s ease;
 }
-.wrapper .form-box { width: 100%; padding: 40px; }
+.wrapper .icon-close:hover { transform: rotate(90deg); filter: brightness(1.12); }
+.wrapper .form-box { width: 100%; padding: 36px 38px; }
 .wrapper .form-box.wide { padding: 34px; }
-.wrapper .form-box.login { transition: transform .35s ease; transform: translateX(0); }
-.wrapper .form-box.register { position: absolute; transition: transform .35s ease; transform: translateX(420px); }
-.wrapper.active .form-box.login { transform: translateX(-420px); }
-.wrapper.active .form-box.register { transform: translateX(0); }
-.form-box h2 { font-size: 1.8rem; text-align: center; margin-bottom: 6px; }
+/* NOTE: no entrance animation on .form-box itself — a keyframed transform/opacity
+   would override the login/register slide transforms and stack both forms. The
+   wrapper's spring entrance carries the motion. */
+.wrapper .form-box.login { transition: transform .55s cubic-bezier(.22,1,.36,1), opacity .4s ease; transform: translateX(0); opacity: 1; }
+.wrapper .form-box.register { position: absolute; transition: transform .55s cubic-bezier(.22,1,.36,1), opacity .4s ease; transform: translateX(430px); opacity: 0; }
+.wrapper.active .form-box.login { transform: translateX(-430px); opacity: 0; }
+.wrapper.active .form-box.register { transform: translateX(0); opacity: 1; }
+.form-box h2 { font-size: 1.72rem; text-align: center; margin-bottom: 4px; }
 
-.input-box { position: relative; width: 100%; margin: 26px 0; border-bottom: 2px solid rgba(255,255,255,.3); }
+.auth-brand { display: flex; justify-content: center; margin-bottom: 12px; }
+.auth-avatar {
+    width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center;
+    font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.12rem; color: #fff;
+    background: var(--grad); background-size: 160% 100%;
+    box-shadow: 0 12px 28px rgba(225,6,0,.42), inset 0 1px 0 rgba(255,255,255,.35);
+    border: 1px solid rgba(255,255,255,.25);
+}
+.auth-sub { text-align: center; color: var(--muted); font-size: .9rem; margin-bottom: 8px; }
+
+.input-box {
+    position: relative; width: 100%; margin: 16px 0;
+    background: rgba(255,255,255,.045); border: 1.5px solid var(--line); border-radius: 15px;
+    transition: border-color .3s ease, box-shadow .3s ease, background .3s ease, transform .2s ease;
+}
+.input-box:focus-within {
+    border-color: rgba(255,107,97,.85); background: rgba(255,255,255,.07);
+    box-shadow: 0 0 0 4px rgba(225,6,0,.16), 0 10px 24px rgba(0,0,0,.3);
+}
 .input-box input, .input-box textarea {
     width: 100%; background: transparent; border: none; outline: none; font: inherit;
-    font-size: 1rem; font-weight: 600; color: var(--text); padding: 10px 35px 8px 5px; resize: vertical;
+    font-size: 1rem; font-weight: 600; color: var(--text);
+    height: 58px; padding: 22px 46px 6px 46px; resize: vertical;
 }
+.input-box textarea { height: auto; min-height: 96px; padding-left: 16px; }
 .input-box label {
-    position: absolute; top: 20px; left: 5px; transform: translateY(-50%);
-    font-size: 1rem; color: var(--muted); font-weight: 500; pointer-events: none;
-    transition: top .4s ease, color .4s ease, font-size .4s ease;
+    position: absolute; top: 50%; left: 46px; transform: translateY(-50%);
+    font-size: .98rem; color: var(--muted); font-weight: 500; pointer-events: none;
+    transition: top .3s ease, color .3s ease, font-size .3s ease, letter-spacing .3s ease;
 }
+.input-box.textarea-box label { left: 16px; top: 30px; }
 .input-box input:focus ~ label, .input-box input:not(:placeholder-shown) ~ label,
 .input-box textarea:focus ~ label, .input-box textarea:not(:placeholder-shown) ~ label {
-    top: -6px; font-size: .8rem; color: #ffb3ae;
+    top: 15px; font-size: .66rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: #ffb3ae;
 }
-.input-box .icon { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: var(--muted); display: flex; }
+.input-box .icon { position: absolute; left: 15px; right: auto; top: 50%; transform: translateY(-50%); color: var(--muted); display: flex; transition: color .3s ease; }
+.input-box:focus-within .icon { color: #ffb3ae; }
+.pass-toggle {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    background: none; border: 0; padding: 6px; cursor: pointer; color: var(--muted);
+    display: flex; border-radius: 8px; transition: color .25s ease, background .25s ease;
+}
+.pass-toggle:hover { color: var(--text); background: rgba(255,255,255,.07); }
+.pass-toggle.on { color: #ffb3ae; }
 
-.remember-forget { font-size: .9em; color: var(--muted); margin: -8px 0 16px; font-weight: 500; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+/* project form modal: no leading icons, so fields sit flush left */
+.form-modal .input-box input, .form-modal .input-box textarea { padding-left: 16px; }
+.form-modal .input-box label { left: 16px; }
+.form-modal .input-box.textarea-box label { top: 30px; }
+.form-modal .input-box input:focus ~ label, .form-modal .input-box input:not(:placeholder-shown) ~ label,
+.form-modal .input-box textarea:focus ~ label, .form-modal .input-box textarea:not(:placeholder-shown) ~ label { top: 15px; }
+
+.remember-forget { font-size: .9em; color: var(--muted); margin: 0 0 16px; font-weight: 500; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
 .remember-forget label input { accent-color: var(--accent); margin-right: 4px; }
 .remember-forget a { color: var(--muted); text-decoration: none; }
 .remember-forget a:hover { text-decoration: underline; }
