@@ -141,6 +141,15 @@
 
             <div class="projects-toolbar reveal">
                 <input type="search" id="projectSearch" placeholder="Search projects by name or stack…" aria-label="Search projects">
+                <div class="filter-group" id="projectFilters" role="group" aria-label="Filter projects by stack">
+                    <button class="filter-btn active" type="button" data-filter="all">All</button>
+                    <button class="filter-btn" type="button" data-filter="node">Node.js</button>
+                    <button class="filter-btn" type="button" data-filter="python">Python</button>
+                    <button class="filter-btn" type="button" data-filter="flutter">Flutter</button>
+                    <button class="filter-btn" type="button" data-filter="jupyter">Jupyter</button>
+                </div>
+                        
+                    
                 <div class="edit-tools" id="editTools" hidden>
                     <button class="btn-solid small" id="addProjectBtn" type="button">+ Add Project</button>
                     <button class="btn-ghost small" id="exportBtn" type="button">Export JSON</button>
