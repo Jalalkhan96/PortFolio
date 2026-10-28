@@ -137,13 +137,34 @@ function deleteProject(id) {
     persistProjects();
 }
 
-function getFilteredProjects() {
-    const q = ($('#projectSearch').value || '').trim().toLowerCase();
-    if (!q) return projects;
-    return projects.filter((p) =>
-        (p.title + ' ' + p.desc + ' ' + p.stack).toLowerCase().includes(q));
+/* ---------------- project stack filter ---------------- */
+let activeStackFilter = 'all';
+
+/* Pure predicate (kept separate so the filter logic is unit-testable):
+   'all' matches everything; otherwise the project's stack must contain
+      the filter keyword (e.g. 'python' matches 'Python / Jupyter'). */
+function stackMatches(stack, filter) {
+   if (filter === 'all') return true;
+   return (stack || '').toLowerCase().includes(filter.toLowerCase());
 }
 
+function getFilteredProjects() {
+   const q = ($('#projectSearch').value || '').trim().toLowerCase();
+   return projects.filter((p) => {
+      if (!stackMatches(p.stack, activeStackFilter)) return false;
+      if (!q) return true;
+      return (p.title + ' ' + p.desc + ' ' + p.stack).toLowerCase().includes(q);
+   });
+}
+
+document.querySelectorAll('#projectFilters .filter-btn').forEach((btn) => {
+   btn.addEventListener('click', () => {
+      activeStackFilter = btn.dataset.filter;
+      document.querySelectorAll('#projectFilters .filter-btn').forEach((b) =>
+             b.classList.toggle('active', b === btn));
+   renderProjects();
+   });
+});
 /* ---------------- rendering (textContent only — no XSS sinks) ---------------- */
 const grid = $('#projectsGrid');
 const emptyNote = $('#emptyNote');
