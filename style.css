@@ -361,6 +361,14 @@ main { padding-top: var(--header-h); }
     transition: border-color .25s ease, box-shadow .25s ease;
 }
 .projects-toolbar input[type="search"]:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(225,6,0,.18); }
+.filter-group { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+.filter-btn {
+   font: inherit; font-size: .85rem; font-weight: 600; padding: 7px 16px; border-radius: 999px; cursor: pointer;
+   background: var(--surface); color: var(--muted); border: 1px solid var(--line-strong);
+   transition: border-color .25s ease, color .25s ease, background .25s ease, transform .2s ease;
+}
+.filter-btn:hover { color: var(--text); border-color: var(--hover-line); transform: translateY(-1px); }
+.filter-btn.active { color: #fff; background: var(--accent); border-color: var(--accent); }
 .edit-tools { display: flex; flex-wrap: wrap; gap: 10px; }
 .edit-hint { color: var(--muted); font-size: .9rem; width: 100%; }
 
