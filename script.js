@@ -649,3 +649,44 @@ document.querySelectorAll('.pass-toggle').forEach((btn) => {
         if (meta) meta.setAttribute('content', next === 'light' ? '#edeff4' : '#070708');
     });
 })();
+
+/* ---------------- contact form: validation + success state ---------------- */
+/* Pure validator (no DOM): returns an error string, or null when valid. */
+function validateContactForm(name, email, message) {
+    if (!name || name.trim().length < 2) {
+        return 'Please enter your name (at least 2 characters).';
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((email || '').trim())) {
+        return 'Please enter a valid email address.';
+    }
+    const text = (message || '').trim();
+    if (text.length < 10) {
+        return 'Please write a message of at least 10 characters.';
+    }
+    if (text.length > 1000) {
+        return 'Message must be at most 1000 characters.';
+    }
+    return null;
+}
+
+(function () {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const msg = document.getElementById('contactMsg');
+        const name = document.getElementById('contactName').value.trim();
+        const email = document.getElementById('contactEmail').value.trim();
+        const message = document.getElementById('contactMessage').value;
+        const error = validateContactForm(name, email, message);
+        if (error) {
+            setMsg(msg, error);
+            return;
+        }
+        /* Static site: no backend to receive the message, so the success
+           state is honest about it — the visitor sends it via the Email link. */
+        setMsg(msg, 'Thanks, ' + name + '! Your message is valid — send it via the Email link above and I\'ll get back to you.', true);
+        toast('Message validated — send it via the Email link.');
+        form.reset();
+    });
+})();

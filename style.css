@@ -420,6 +420,7 @@ main { padding-top: var(--header-h); }
     transition: border-color .25s ease, background .25s ease, transform .25s ease;
 }
 .contact-links a:hover { border-color: var(--accent); background: rgba(225,6,0,.12); transform: translateY(-2px); }
+.contact-form { margin-top: 28px; max-width: 620px; }
 
 footer { margin-top: clamp(60px, 9vw, 110px); border-top: 1px solid var(--line); padding: 38px 16px 30px; }
 .footer-inner { max-width: 1120px; margin: 0 auto; display: grid; gap: 18px; justify-items: center; text-align: center; }

@@ -178,6 +178,22 @@
                     <a href="https://t.me/abixrealabix" target="_blank" rel="noopener">Telegram</a>
                     <a href="https://discord.com/users/itxabixofficial" target="_blank" rel="noopener">Discord</a>
                 </div>
+                <form id="contactForm" class="contact-form" novalidate>
+                    <div class="input-box">
+                        <input type="text" id="contactName" required placeholder=" " autocomplete="name" maxlength="80">
+                        <label for="contactName">Your name</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="email" id="contactEmail" required placeholder=" " autocomplete="email">
+                        <label for="contactEmail">Email</label>
+                    </div>
+                    <div class="input-box textarea-box">
+                        <textarea id="contactMessage" required placeholder=" " rows="4" maxlength="1000"></textarea>
+                        <label for="contactMessage">Message</label>
+                    </div>
+                    <p class="form-msg" id="contactMsg" role="alert"></p>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
             </div>
         </section>
     </main>
