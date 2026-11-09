@@ -590,7 +590,7 @@ applyAuthUI();
             }
         }
     }, { rootMargin: '-38% 0px -55% 0px' });
-    ['home', 'about', 'skills', 'projects', 'contact'].forEach((id) => {
+    ['home', 'about', 'skills', 'design', 'projects', 'tools', 'contact'].forEach((id) => {
         const s = document.getElementById(id);
         if (s) navObserver.observe(s);
     });

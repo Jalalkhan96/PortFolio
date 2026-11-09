@@ -1,0 +1,236 @@
+/* ============================================================
+   Tools Kit + Figma Design + Glass additions for Jalalkhan96/PortFolio
+   Same UI as the repo: every colour below comes from style.css's
+   own variables (--surface, --line, --text, --muted, --accent),
+   so both themes flip automatically with [data-theme].
+   Loaded AFTER style.css.
+   ============================================================ */
+
+/* variable bridge: the tool builders (ported unchanged) reference
+   the ABIX single-file palette names; map them onto this repo's. */
+#tools, #modal, #design {
+    --n200: var(--line);
+    --n300: var(--line-strong);
+    --n500: var(--muted);
+    --n700: var(--text);
+    --p600: var(--accent);
+}
+
+/* ---------- Figma Design section ---------- */
+.design-strip {
+    display: flex; border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--line); margin-top: 18px;
+}
+.design-strip div {
+    flex: 1; height: 54px; display: flex; align-items: flex-end; justify-content: center;
+    font-size: 11px; font-weight: 700; padding-bottom: 5px;
+}
+.design-note { color: var(--muted); max-width: 680px; margin-top: 14px; font-size: .95rem; }
+
+/* ---------- Tools Kit section ---------- */
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+.toolbar input[type="search"] {
+    flex: 1 1 260px; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 999px; color: var(--text); font: inherit; padding: 12px 20px;
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.toolbar input[type="search"]:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(225,6,0,.18); }
+#catChips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+    padding: 9px 16px; border-radius: 999px; cursor: pointer; font: inherit; font-size: .86rem; font-weight: 600;
+    background: var(--surface); color: var(--muted); border: 1px solid var(--line-strong);
+    transition: color .25s ease, border-color .25s ease, transform .25s ease;
+}
+.chip:hover { color: var(--text); border-color: var(--hover-line); transform: translateY(-1px); }
+.chip.on { color: #fff; background: var(--accent); border-color: var(--accent); }
+
+#toolGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 16px; }
+.tcard {
+    position: relative; cursor: pointer; background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 20px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.tcard:hover { border-color: var(--hover-line); transform: translateY(-3px); box-shadow: var(--shadow); }
+.tcard .ic { font-size: 26px; }
+.tcard h3 { font-size: 1rem; margin: 8px 0 4px; color: var(--text); }
+.tcard p { font-size: .86rem; color: var(--muted); }
+.tcard .cat {
+    position: absolute; top: 14px; right: 44px; font-size: .68rem; font-weight: 700;
+    color: var(--label-accent); background: var(--chip-bg); padding: 3px 8px; border-radius: 999px;
+}
+.star {
+    position: absolute; top: 10px; right: 10px; font-size: 19px; background: none; border: 0;
+    cursor: pointer; color: var(--line-strong); line-height: 1; padding: 2px;
+}
+.star.on { color: #f59e0b; }
+#favWrap {
+    display: none; background: var(--surface); border: 1px dashed var(--line-strong);
+    border-radius: var(--radius); padding: 16px; margin-bottom: 18px;
+}
+#favWrap h3 { font-size: .95rem; color: var(--text); margin-bottom: 10px; }
+#favGrid { display: flex; gap: 10px; flex-wrap: wrap; }
+.favbtn {
+    background: var(--surface-solid); border: 1px solid var(--line-strong); padding: 8px 14px;
+    border-radius: 999px; font-weight: 600; font-size: .84rem; cursor: pointer; color: var(--text); font: inherit;
+}
+#toolCount { color: var(--muted); font-size: .86rem; margin-top: 14px; }
+
+/* ---------- Tool modal (same overlay language as the repo's popups) ---------- */
+.modal {
+    position: fixed; inset: 0; background: var(--overlay-dim); display: none; z-index: 300;
+    padding: 18px; overflow: auto; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.modal.open { display: block; }
+.sheet {
+    background: var(--modal-bg); color: var(--text); max-width: 720px; margin: 30px auto;
+    border: 1px solid var(--line); border-radius: 18px; padding: 26px; box-shadow: var(--shadow);
+}
+.sheet .x {
+    float: right; background: var(--chip-bg); color: var(--text); border: 1px solid var(--line);
+    width: 36px; height: 36px; border-radius: 50%; font-size: 17px; cursor: pointer;
+}
+.sheet h3 { font-size: 1.35rem; color: var(--text); margin-bottom: 4px; }
+.sheet .sub { color: var(--muted); font-size: .9rem; margin-bottom: 18px; }
+.sheet .f { margin-bottom: 14px; }
+.sheet .f label { display: block; font-size: .82rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.sheet .f input, .sheet .f textarea, .sheet .f select {
+    width: 100%; padding: 11px 12px; border: 1px solid var(--line-strong); border-radius: 10px;
+    font-size: .95rem; font-family: inherit; background: var(--input-bg); color: var(--text);
+}
+.sheet .f input:focus, .sheet .f textarea:focus, .sheet .f select:focus { outline: none; border-color: var(--accent); background: var(--input-bg-focus); }
+.sheet .f textarea { min-height: 96px; resize: vertical; }
+.sheet .row { display: flex; gap: 10px; flex-wrap: wrap; }
+.sheet .row > * { flex: 1; min-width: 120px; }
+.sheet .out {
+    background: var(--input-bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px;
+    font-size: .92rem; word-break: break-word; white-space: pre-wrap; min-height: 44px; color: var(--text);
+}
+.sheet .mono { font-family: Consolas, 'Courier New', monospace; font-size: .86rem; }
+.sheet .btn {
+    display: inline-block; width: auto; height: auto; padding: 11px 20px; border-radius: 10px;
+    font-weight: 700; font-size: .92rem; border: 0; cursor: pointer; margin: 4px 6px 4px 0; font-family: inherit;
+}
+.sheet .btn-p { background: var(--accent); color: #fff; }
+.sheet .btn-p:hover { background: var(--accent-deep); }
+.sheet .btn-ghost { background: transparent; color: var(--text); border: 1.5px solid var(--line-strong); }
+.sheet .btn-ghost:hover { border-color: var(--hover-line); }
+.sheet .swatches { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; margin-top: 10px; }
+@media (max-width: 640px) { .sheet .swatches { grid-template-columns: repeat(5, 1fr); } }
+.sheet .sw {
+    border-radius: 9px; padding: 8px 6px; font-size: 10.5px; font-weight: 700; text-align: center;
+    cursor: pointer; min-height: 52px; display: flex; flex-direction: column; justify-content: flex-end;
+}
+.sheet input[type="range"] { width: 100%; accent-color: var(--accent); }
+.sheet input[type="color"] { width: 64px; height: 40px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--surface-solid); padding: 2px; }
+.sheet .mem { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 300px; }
+.sheet .mem div {
+    aspect-ratio: 1; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 24px; cursor: pointer; background: var(--chip-bg); border: 1px solid var(--line-strong); user-select: none;
+}
+.sheet .mem div.done { background: #2ecc71; color: #fff; }
+.sheet .hidden { display: none !important; }
+
+/* ---------- "Get started" glass button (user-supplied component, scoped .gs) ----------
+   Same adaptation as the ABIX build: the demo's contrast(3) fx-layer filter is
+   dropped (it distorts the hero behind it) and the glass fill is raised to
+   white .92 so the #3e3e3e label keeps 10.7:1 contrast. Fully responsive. */
+:root {
+    --spring-easing: linear(0, 0.0018, 0.0069 1.15%, 0.026 2.3%, 0.0637, 0.1135 5.18%, 0.2229 7.78%, 0.5977 15.84%, 0.7014, 0.7904, 0.8641, 0.9228, 0.9676 28.8%, 1.0032 31.68%, 1.0225, 1.0352 36.29%, 1.0431 38.88%, 1.046 42.05%, 1.0448 44.35%, 1.0407 47.23%, 1.0118 61.63%, 1.0025 69.41%, 0.9981 80.35%, 0.9992 99.94%);
+}
+.gs .container { display: flex; flex-direction: column; gap: 5rem; }
+.gs .top { display: flex; gap: 5rem; }
+.gs .box {
+    --w: 100px; --h: 100px; --r: 9999px; --tr: 25%;
+    z-index: 5; position: relative; width: var(--w); height: var(--h);
+    display: flex; justify-content: center; align-items: center; border-radius: var(--r);
+    border: 1px double rgba(51,51,51,.08);
+    box-shadow: inset 2px -2px 1px -1px rgba(255,255,255,.9), inset -2px 2px 1px -1px rgba(255,255,255,.9),
+        inset 6px -6px 1px -6px rgba(255,255,255,.55), inset -6px 6px 1px -6px rgba(255,255,255,.55),
+        inset 0 0 2px rgba(0,0,0,.8), 0 4px 8px rgba(0,0,0,.2);
+    background: rgba(255,255,255,.92); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+    cursor: pointer; filter: brightness(.98); user-select: none; text-decoration: none;
+}
+.gs .box .svg { width: 28px; filter: drop-shadow(0 25px 3px rgba(102,102,102,.2)); }
+.gs .box .text { filter: drop-shadow(0 25px 3px rgba(102,102,102,.15)); }
+.gs .box:before {
+    content: ""; position: absolute; z-index: 1; top: 35%; left: 50%; transform: translateX(-50%);
+    width: calc(var(--w) - 16px); height: calc(var(--h) - 16px); border-radius: var(--r);
+    border: 1px solid rgba(0,0,0,.9); filter: blur(8px);
+}
+.gs .box:after {
+    z-index: 6; content: ""; position: absolute; width: var(--w); height: var(--h); border-radius: var(--r);
+    filter: blur(7px); pointer-events: none;
+    background: linear-gradient(45deg, rgba(255,255,255,.8) 0%, transparent var(--tr), transparent calc(100% - var(--tr)), rgba(255,255,255,.8) 100%);
+}
+.gs .box .circle-overlay {
+    position: absolute; width: calc(var(--w) - 9px); height: calc(var(--h) - 9px);
+    border: 1px solid rgba(255,255,255,.2); border-radius: var(--r); filter: blur(1px);
+}
+.gs .start-btn { padding: 0 .8rem; display: flex; align-items: center; gap: 1rem; transition: .25s; }
+.gs .start-btn .text { font-size: 25px; font-family: system-ui, -apple-system, sans-serif; color: #3e3e3e; position: relative; z-index: 2; }
+.gs .start-btn .btn-icon {
+    width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;
+    background: #3e3e3e; border-radius: 50%; box-shadow: 0 0 6px rgba(0,0,0,.3);
+    transition: .25s; position: relative; z-index: 2; flex: none;
+}
+.gs .start-btn .btn-icon .svg { width: 16px; fill: #f5f5f5; }
+.gs .start-btn:hover { background: rgba(255,255,255,.98); transform: translateY(-3px); text-decoration: none; }
+.gs .start-btn:hover .btn-icon { transform: scale(1.1); }
+.gs .start-btn:active { transform: scale(.94); }
+.gs .start-btn:active .text { color: #000; }
+.gs .start-btn:active .btn-icon { transform: scale(.94); }
+.hero-cta { align-items: center; }
+@media (max-width: 560px) {
+    .gs .box { --w: min(248px, 76vw) !important; --h: 64px !important; }
+    .gs .start-btn .text { font-size: 20px; }
+    .gs .start-btn { gap: .7rem; }
+}
+
+/* ---------- Bottom glass dock — anchored pointer + spring easing + tooltips ----------
+   Idea from the user's snippet + glassFolio / css.glass. Colours come from the
+   repo variables; text passes AA in both themes (see check report). */
+body { padding-bottom: 96px; }
+.dock {
+    position: fixed; left: 50%; transform: translateX(-50%); bottom: 16px; z-index: 140;
+    display: flex; align-items: center; gap: 2px; padding: .5rem; border-radius: 1rem;
+    background: var(--header-bg-scrolled); border: 1px solid var(--line-strong);
+    box-shadow: 0 4px 24px rgba(0,0,0,.28); backdrop-filter: blur(14px) saturate(150%);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    max-width: calc(100vw - 20px); overflow-x: auto; scrollbar-width: none;
+}
+.dock::-webkit-scrollbar { display: none; }
+.dock button {
+    position: relative; padding: 10px 13px; display: flex; align-items: center; justify-content: center;
+    border: none; background: none; border-radius: 50px; margin: 0 2px; cursor: pointer;
+    font-size: 19px; color: var(--text); transition: background-color .3s ease, color .3s ease;
+    flex: none; font-family: inherit;
+}
+.dock button::before { content: ''; position: absolute; inset: -.4rem; }
+.dock button:hover, .dock button:focus-visible { background: var(--chip-bg); outline: none; }
+.dock button .tip {
+    position: absolute; bottom: calc(100% + 14px); left: 50%; transform: translate(-50%, 4px);
+    background: var(--surface-solid); color: var(--text); padding: .25rem .5rem; border-radius: .5rem;
+    font-size: 12.5px; letter-spacing: .3px; border: 1px solid var(--line-strong);
+    box-shadow: 0 2px 10px rgba(0,0,0,.18); opacity: 0; pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease; white-space: nowrap;
+}
+.dock button:hover .tip, .dock button:focus-visible .tip { opacity: 1; transform: translate(-50%, 0); }
+.dock button.sel { color: var(--accent-soft); }
+.dock .anchored-pointer {
+    position: absolute; top: 50%; left: 0; width: 46px; height: 52px; margin-top: -26px;
+    border: 1.5px solid var(--accent); border-radius: 2rem;
+    transition: transform 1s var(--spring-easing);
+    filter: drop-shadow(0 3px 6px rgba(225,6,0,.35)); pointer-events: none; overflow: hidden;
+}
+.dock .anchored-pointer::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(1rem 3rem ellipse at 50% 85%, rgba(255,255,255,0) 10%, rgba(255,255,255,.35) 175%);
+}
+@media (max-width: 560px) {
+    .dock button { padding: 9px 10px; font-size: 17px; }
+    .dock { bottom: 10px; }
+    body { padding-bottom: 88px; }
+}
+/* keep the repo's back-to-top clear of the dock */
+.to-top { bottom: 96px; }
+@media (max-width: 560px) { .to-top { bottom: 88px; } }

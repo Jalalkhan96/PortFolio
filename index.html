@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://api.qrserver.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://api.aladhan.com https://api.dictionaryapi.dev https://api.exchangerate-api.com https://api.mymemory.translated.net https://api.github.com https://cloudflare-dns.com https://crt.sh https://ipwho.is https://geocoding-api.open-meteo.com https://api.open-meteo.com https://tessdata.projectnaptha.com; worker-src 'self' blob: https://cdn.jsdelivr.net; media-src 'self' blob: data:; base-uri 'self'; form-action 'self'">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Jalal Khan — Software Engineer (BS Software Engineering, COMSATS Abbottabad). Full-stack web apps, WhatsApp automation and developer tools.">
+    <meta name="description" content="Jalal Khan — Software Engineer (BS Software Engineering, COMSATS Abbottabad). Full-stack web apps, WhatsApp automation, Figma design and a free 68-tool in-browser Tools Kit.">
     <meta name="theme-color" content="#070708">
     <title>Jalal Khan — Software Engineer | Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,6 +15,7 @@
     <meta name="theme-color" content="#070708">
     <script src="theme-init.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="tools.css">
 </head>
 
 <body>
@@ -36,7 +37,9 @@
                 <a href="#home" data-nav="home">Home</a>
                 <a href="#about" data-nav="about">About</a>
                 <a href="#skills" data-nav="skills">Skills</a>
+                <a href="#design" data-nav="design">Design</a>
                 <a href="#projects" data-nav="projects">Projects</a>
+                <a href="#tools" data-nav="tools">Tools</a>
                 <a href="#contact" data-nav="contact">Contact</a>
                 <span class="edit-badge" id="editBadge" hidden>Edit mode</span>
                 <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch dark / light theme" title="Dark / Light">
@@ -58,6 +61,13 @@
             <p class="hero-sub reveal">BS Software Engineering, COMSATS University Abbottabad (2022–2026) · Abbottabad, Pakistan.
                 I build full-stack web apps, WhatsApp automation and developer tools — designed premium, engineered to ship.</p>
             <div class="hero-cta reveal">
+                <div class="gs"><div class="container"><div class="top">
+                    <a class="box start-btn" href="#tools" style="--w: 260px; --h: 75px; --tr: 15%;">
+                        <span class="text">Get started</span>
+                        <span class="btn-icon"><svg class="svg" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M779.180132 473.232045 322.354755 16.406668c-21.413706-21.413706-56.121182-21.413706-77.534887 0-21.413706 21.413706-21.413706 56.122205 0 77.534887l418.057421 418.057421L244.819868 930.057421c-21.413706 21.413706-21.413706 56.122205 0 77.534887 10.706853 10.706853 24.759917 16.059767 38.767955 16.059767s28.061103-5.353938 38.767955-16.059767L779.180132 550.767955C800.593837 529.35425 800.593837 494.64575 779.180132 473.232045z"></path></svg></span>
+                        <span class="circle-overlay"></span>
+                    </a>
+                </div></div></div>
                 <a class="btn-solid btn-gradient" href="#projects">View Projects <span aria-hidden="true">→</span></a>
                 <a class="btn-ghost btn-glass" href="https://github.com/Jalalkhan96" target="_blank" rel="noopener">GitHub Profile</a>
             </div>
@@ -134,6 +144,39 @@
             </div>
         </section>
 
+
+        <!-- ============ FIGMA DESIGN ============ -->
+        <section class="section" id="design">
+            <p class="section-kicker reveal">Figma Design &amp; UI</p>
+            <h2 class="section-title reveal">Designing in Figma — systems, not screens</h2>
+            <div class="skills-grid bento">
+                <div class="skill-card reveal bento-wide">
+                    <div class="skill-icon" aria-hidden="true">✦</div>
+                    <h3>ZBR10 — Product Design</h3>
+                    <p>11 complete product pages in one Figma file — AuraPods Max, SonicBuds Air, NebulaTab 11, PulseFit Watch 5 and more — one shared layout system with prices, ratings and feature cards.</p>
+                    <div class="chip-row"><span><a href="https://www.figma.com/design/Q98SmBf3debPUGkLi8pyEu/ZBR10-%E2%80%94-Product-Design" target="_blank" rel="noopener" style="color:inherit">Open in Figma →</a></span><span>11 pages</span><span>Components</span></div>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-icon" aria-hidden="true">◐</div>
+                    <h3>Colour Systems 50–900</h3>
+                    <p>One family per hue, 500 = main colour, named as Figma Variables. Small Success / Warning / Error sets, never red as decoration.</p>
+                </div>
+                <div class="skill-card reveal">
+                    <div class="skill-icon" aria-hidden="true">▣</div>
+                    <h3>Google Stitch Prototyping</h3>
+                    <p>Fast UI directions in Stitch, then finished properly in Figma with real components and contrast checks.</p>
+                </div>
+                <div class="skill-card reveal bento-wide">
+                    <div class="skill-icon" aria-hidden="true">&lt;/&gt;</div>
+                    <h3>Glassmorphism UI</h3>
+                    <p>Frosted-glass surfaces, spring-eased motion and glass controls — this page&rsquo;s hero Get&nbsp;started button and bottom dock are built that way, and the Tools Kit below has a live Glassmorphism Generator (css.glass style).</p>
+                    <div class="chip-row"><span>Glass</span><span>Spring motion</span><span>WCAG contrast</span></div>
+                </div>
+            </div>
+            <p class="design-note">The 50–900 colour system, live — try it yourself in the <strong>Colour Scale Generator</strong> in the Tools Kit below.</p>
+            <div class="design-strip" id="scaleStrip" aria-hidden="true"></div>
+        </section>
+
         <!-- ============ PROJECTS (CRUD) ============ -->
         <section class="section" id="projects">
             <p class="section-kicker reveal">Selected work</p>
@@ -163,6 +206,21 @@
 
             <div class="projects-grid" id="projectsGrid"></div>
             <p class="empty-note" id="emptyNote" hidden>No projects match your search.</p>
+        </section>
+
+
+        <!-- ============ TOOLS KIT (68 tools, all in-browser) ============ -->
+        <section class="section" id="tools">
+            <p class="section-kicker reveal">Your Workspace</p>
+            <h2 class="section-title reveal">Tools Kit — free, in your browser</h2>
+            <p class="contact-sub">68 working tools — design, dev, encoding, converters, text, images, media and more. Tap the star on any tool to pin it to your favorites. Everything runs 100% in your browser; a few tools (weather, currency, OCR libraries) fetch live data or libraries when you open them.</p>
+            <div id="favWrap"><h3>⭐ Favorite tools</h3><div id="favGrid"></div></div>
+            <div class="toolbar">
+                <input type="search" id="toolSearch" placeholder="Search tools…" aria-label="Search tools">
+                <div id="catChips"></div>
+            </div>
+            <div id="toolGrid"></div>
+            <p id="toolCount"></p>
         </section>
 
         <!-- ============ CONTACT ============ -->
@@ -207,7 +265,9 @@
             <nav class="footer-nav" aria-label="Footer">
                 <a href="#about">About</a>
                 <a href="#skills">Skills</a>
+                <a href="#design">Design</a>
                 <a href="#projects">Projects</a>
+                <a href="#tools">Tools</a>
                 <a href="#contact">Contact</a>
             </nav>
             <p class="footer-copy">&copy; <span id="year"></span> Jalal Khan — Built with plain HTML, CSS &amp; JavaScript. No build step, no tracking.</p>
@@ -215,6 +275,16 @@
     </footer>
 
     <button class="to-top" id="toTop" aria-label="Back to top" hidden>↑</button>
+
+    <nav class="dock" id="dock" aria-label="Quick navigation">
+        <span class="anchored-pointer" id="dockPtr" aria-hidden="true"></span>
+        <button type="button" data-go="#home" class="sel" aria-label="Home">🏠<span class="tip">Home</span></button>
+        <button type="button" data-go="#projects" aria-label="Projects">📦<span class="tip">Projects</span></button>
+        <button type="button" data-go="#design" aria-label="Design">🎨<span class="tip">Design</span></button>
+        <button type="button" data-go="#tools" aria-label="Tools Kit">🧰<span class="tip">Tools Kit</span></button>
+        <button type="button" data-go="#contact" aria-label="Contact">✉️<span class="tip">Contact</span></button>
+    </nav>
+
 
     <!-- ============ AUTH POPUP (login / register) ============ -->
     <div class="overlay" id="authOverlay" hidden>
@@ -318,9 +388,28 @@
         </div>
     </div>
 
+
+    <!-- ============ TOOL MODAL ============ -->
+    <div class="modal" id="modal">
+        <div class="sheet">
+            <button class="x" id="modalX" aria-label="Close">✕</button>
+            <h3 id="toolTitle"></h3>
+            <div class="sub" id="toolSub"></div>
+            <div id="toolBody"></div>
+        </div>
+    </div>
+
     <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-beautify@1.15.1/js/lib/beautify.js"></script>
+    <script src="tools.js"></script>
+
 </body>
 
 </html>

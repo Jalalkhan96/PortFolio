@@ -73,3 +73,20 @@ paint by `theme-init.js` (no flash), and the first visit follows the visitor's
 OS dark/light preference. Display font upgraded from Cinzel to **Sora** for a
 modern geometric look; all surfaces (header, cards, modals, inputs, auth
 popup) are driven by CSS variables so both themes stay pixel-consistent.
+
+## Tools Kit, Figma Design & glass additions (Nov 2026)
+
+- `tools.js` / `tools.css` — the full **68-tool Tools Kit** (search, category
+  chips, favorites, modal) ported from the ABIX single-file portfolio, styled
+  entirely with this repo's own CSS variables so both themes just work.
+  Includes the css.glass-style **Glassmorphism Generator**.
+- New **#design** section (Figma / ZBR10, colour systems, Stitch, glass UI)
+  and **#tools** section; nav and the bottom glass dock link to them.
+- Hero gained the glass **Get started** button; the bottom dock uses a
+  spring-eased anchored pointer (`--spring-easing` in `tools.css`).
+- Bottom contrast fix: footer text now uses `--footer-muted` and the
+  back-to-top button uses `--to-top-bg` / `--to-top-text` — the old light
+  theme arrow measured 1.04:1 (invisible); it is now 18.25:1.
+- CSP note: `script-src` allows jsDelivr (pdf-lib, Tesseract, JsBarcode,
+  marked, DOMPurify, js-beautify), `connect-src` allows the tools' live APIs,
+  and `style-src` allows inline styles, which the tool builders' markup needs.

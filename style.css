@@ -41,6 +41,10 @@
     --overlay-dim: rgba(3, 3, 5, .74);
     --toast-bg: rgba(20, 20, 25, .92);
     --toast-text: #f5f5f7;
+    --footer-muted: #a8a8b3;
+    --to-top-bg: rgba(16, 16, 20, .8);
+    --to-top-text: #f5f5f7;
+    --to-top-shadow: 0 12px 28px rgba(0, 0, 0, .45);
 }
 
 /* ---------- white glass theme (v3.2) ---------- */
@@ -67,6 +71,10 @@
     --label-accent: #c21407;
     --modal-bg: linear-gradient(168deg, rgba(255, 255, 255, .96), rgba(240, 243, 249, .97) 55%);
     --overlay-dim: rgba(210, 215, 228, .5);
+    --footer-muted: #3e4657;
+    --to-top-bg: #ffffff;
+    --to-top-text: #12151d;
+    --to-top-shadow: 0 12px 28px rgba(31, 38, 66, .18);
 }
 [data-theme="light"] .orb { opacity: .32; }
 [data-theme="light"] .auth-orb-a { background: rgba(225, 6, 0, .25); }
@@ -424,17 +432,17 @@ main { padding-top: var(--header-h); }
 
 footer { margin-top: clamp(60px, 9vw, 110px); border-top: 1px solid var(--line); padding: 38px 16px 30px; }
 .footer-inner { max-width: 1120px; margin: 0 auto; display: grid; gap: 18px; justify-items: center; text-align: center; }
-.footer-brand p { color: var(--muted); margin-top: 6px; font-size: .95rem; }
+.footer-brand p { color: var(--footer-muted); margin-top: 6px; font-size: .95rem; }
 .footer-nav { display: flex; gap: 26px; flex-wrap: wrap; justify-content: center; }
-.footer-nav a { color: var(--muted); text-decoration: none; font-weight: 500; transition: color .25s ease; }
+.footer-nav a { color: var(--footer-muted); text-decoration: none; font-weight: 500; transition: color .25s ease; }
 .footer-nav a:hover { color: var(--text); }
-.footer-copy { color: var(--muted); font-size: .88rem; }
+.footer-copy { color: var(--footer-muted); font-size: .88rem; }
 
 .to-top {
     position: fixed; right: 22px; bottom: 22px; z-index: 150;
     width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line-strong);
-    background: rgba(16,16,20,.8); color: var(--text); font-size: 1.15rem; cursor: pointer;
-    backdrop-filter: blur(10px); box-shadow: 0 12px 28px rgba(0,0,0,.45);
+    background: var(--to-top-bg); color: var(--to-top-text); font-size: 1.15rem; cursor: pointer;
+    backdrop-filter: blur(10px); box-shadow: var(--to-top-shadow);
     transition: transform .25s ease, border-color .25s ease;
 }
 .to-top:hover { transform: translateY(-3px); border-color: var(--accent); }
