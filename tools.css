@@ -216,16 +216,6 @@ body { padding-bottom: 96px; }
 }
 .dock button:hover .tip, .dock button:focus-visible .tip { opacity: 1; transform: translate(-50%, 0); }
 .dock button.sel { color: var(--accent-soft); }
-.dock .anchored-pointer {
-    position: absolute; top: 50%; left: 0; width: 46px; height: 52px; margin-top: -26px;
-    border: 1.5px solid var(--accent); border-radius: 2rem;
-    transition: transform 1s var(--spring-easing);
-    filter: drop-shadow(0 3px 6px rgba(225,6,0,.35)); pointer-events: none; overflow: hidden;
-}
-.dock .anchored-pointer::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(1rem 3rem ellipse at 50% 85%, rgba(255,255,255,0) 10%, rgba(255,255,255,.35) 175%);
-}
 @media (max-width: 560px) {
     .dock button { padding: 9px 10px; font-size: 17px; }
     .dock { bottom: 10px; }
@@ -234,3 +224,10 @@ body { padding-bottom: 96px; }
 /* keep the repo's back-to-top clear of the dock */
 .to-top { bottom: 96px; }
 @media (max-width: 560px) { .to-top { bottom: 88px; } }
+
+/* ---------- Stage 2: focus visibility + reduced motion ---------- */
+.tcard:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+    .dock button, .tcard, .chip { transition: none; }
+    .gs .box, .gs .start-btn, .gs .start-btn .btn-icon { transition: none; }
+}

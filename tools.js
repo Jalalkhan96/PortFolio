@@ -67,10 +67,12 @@ function render(){
     (t.name.toLowerCase().includes(query)||t.desc.toLowerCase().includes(query)));
   list.forEach(t=>{
     const d=document.createElement('div'); d.className='card tcard';
+    d.tabIndex=0; d.setAttribute('role','button'); d.setAttribute('aria-label','Open '+t.name);
     d.innerHTML = `<button class="star ${isFav(t.id)?'on':''}" title="Pin to favorites">★</button>
       <span class="cat">${t.cat}</span><div class="ic">${t.ic}</div><h3>${t.name}</h3><p>${t.desc}</p>`;
     d.querySelector('.star').onclick = e=>toggleFav(t.id, e);
     d.onclick = ()=>openTool(t.id);
+    d.onkeydown = e=>{ if((e.key==='Enter'||e.key===' ') && e.target===d){ e.preventDefault(); openTool(t.id); } };
     grid.appendChild(d);
   });
   $('#toolCount').textContent = list.length + ' of ' + TOOLS.length + ' tools';
@@ -100,10 +102,12 @@ function openTool(id){
   const body=$('#toolBody'); body.innerHTML='';
   BUILDERS[id](body);
   modal.classList.add('open');
+  var mx=$('#modalX'); if(mx) mx.focus();
 }
 function closeTool(){ modal.classList.remove('open'); if(window.__timer){clearInterval(window.__timer); window.__timer=null;} }
 $('#modalX').onclick=closeTool;
 modal.addEventListener('click',e=>{ if(e.target===modal) closeTool(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && modal.classList.contains('open')) closeTool(); });
 
 /* helpers */
 function F(label, inner){ return `<div class="f"><label>${label}</label>${inner}</div>`; }
@@ -111,7 +115,10 @@ function TA(id, ph){ return `<textarea id="${id}" placeholder="${ph||''}"></text
 function IN(id, ph, type){ return `<input id="${id}" type="${type||'text'}" placeholder="${ph||''}">`; }
 function OUT(id){ return `<div class="out" id="${id}">—</div>`; }
 function BTN(txt, cls){ return `<button class="btn ${cls||'btn-p'}" style="margin:4px 6px 4px 0">${txt}</button>`; }
-function copyTxt(s){ if(navigator.clipboard) navigator.clipboard.writeText(s); }
+function tkToast(msg){ var t=document.getElementById('toast'); if(!t) return; t.textContent=msg; t.hidden=false; requestAnimationFrame(function(){ t.classList.add('show'); }); clearTimeout(tkToast._t); tkToast._t=setTimeout(function(){ t.classList.remove('show'); setTimeout(function(){ t.hidden=true; },320); },2200); }
+async function copyTxt(s){ s=String(s==null?'':s); if(!s) return;
+  try{ if(navigator.clipboard && window.isSecureContext){ await navigator.clipboard.writeText(s); tkToast('Copied to clipboard \u2713'); return; } throw new Error('clipboard unavailable'); }
+  catch(e){ try{ var ta=document.createElement('textarea'); ta.value=s; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); var ok=document.execCommand('copy'); document.body.removeChild(ta); tkToast(ok?'Copied to clipboard \u2713':'Copy failed \u2014 select the text and copy manually'); }catch(e2){ tkToast('Copy failed \u2014 select the text and copy manually'); } } }
 function hexToRgb(h){ h=h.replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join(''); const n=parseInt(h,16); return [n>>16&255, n>>8&255, n&255]; }
 function rgbToHex(r,g,b){ return '#'+[r,g,b].map(v=>Math.round(Math.max(0,Math.min(255,v))).toString(16).padStart(2,'0')).join('').toUpperCase(); }
 function rgbToHsl(r,g,b){ r/=255;g/=255;b/=255; const mx=Math.max(r,g,b),mn=Math.min(r,g,b); let h=0,s=0,l=(mx+mn)/2;
@@ -200,10 +207,15 @@ passgen(el){
 },
 
 async hash(el){
-  el.innerHTML = F('Text', TA('ht','')) + `<div class="row">${BTN('SHA-256')}${BTN('SHA-512','btn-ghost')}${BTN('SHA-1','btn-ghost')}</div>` + OUT('hout');
-  const go=async alg=>{ const buf=await crypto.subtle.digest(alg, new TextEncoder().encode($('#ht').value));
-    $('#hout').textContent=[...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join(''); };
+  el.innerHTML = F('Text', TA('ht','')) + `<div class="row">${BTN('SHA-256')}${BTN('SHA-512','btn-ghost')}${BTN('SHA-1','btn-ghost')}</div>` + OUT('hout') + BTN('Copy result','btn-ghost');
+  const go=async alg=>{
+    if(!(window.crypto && crypto.subtle && window.isSecureContext)){ $('#hout').textContent='\u274C Web Crypto is unavailable here \u2014 hashing needs a modern browser on HTTPS (or localhost). Open this page over HTTPS and try again.'; return; }
+    $('#hout').textContent='Hashing\u2026';
+    try{ const buf=await crypto.subtle.digest(alg, new TextEncoder().encode($('#ht').value));
+      $('#hout').textContent=[...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join(''); }
+    catch(e){ $('#hout').textContent='\u274C Hash failed: '+e.message; } };
   const bs=el.querySelectorAll('.btn'); bs[0].onclick=()=>go('SHA-256'); bs[1].onclick=()=>go('SHA-512'); bs[2].onclick=()=>go('SHA-1');
+  bs[3].onclick=()=>{ const v=$('#hout').textContent; if(v && v!=='\u2014' && v.indexOf('\u274C')!==0 && v!=='Hashing\u2026') copyTxt(v); else tkToast('Generate a hash first'); };
 },
 
 uuid(el){
@@ -450,30 +462,37 @@ TOOLS.push(
 );
 Object.assign(BUILDERS, {
 glass(el){
+  var DEF={c:'#FFFFFF',o:20,b:8,s:150,r:16,bo:30,shb:30,sho:15};
   el.innerHTML = `<div style="border-radius:16px;padding:22px;background:linear-gradient(120deg,#F59E0B,#EC4899 45%,#3B8EF5);margin-bottom:14px">
       <div id="glprev" style="padding:20px;max-width:340px;margin:0 auto;text-align:center;color:#fff">
         <div style="font-size:30px">🪟</div><b>Glass Card</b>
-        <p style="font-size:13.5px">Frosted glass over a bright gradient — exactly what the CSS below produces.</p>
+        <p style="font-size:13.5px">Frosted glass over a bright gradient \u2014 exactly what the CSS below produces.</p>
       </div></div>`
-    + `<div class="row">${F('Tint colour','<input type="color" id="glc" value="#FFFFFF">')}${F('Radius (px)','<input id="glr" type="number" value="16" min="0" max="60">')}</div>`
+    + `<div class="row">${F('Tint colour','<input type="color" id="glc" value="#FFFFFF">')}${F('Radius: <span id="glrv">16</span>px','<input id="glr" type="range" min="0" max="60" value="16">')}</div>`
     + F('Opacity: <span id="glov">20</span>%','<input id="glo" type="range" min="0" max="100" value="20">')
     + F('Blur: <span id="glbv">8</span>px','<input id="glb" type="range" min="0" max="40" value="8">')
     + F('Saturation: <span id="glsv">150</span>%','<input id="gls" type="range" min="50" max="250" value="150">')
-    + OUT('glout') + BTN('Copy CSS');
+    + F('Border opacity: <span id="glbov">30</span>%','<input id="glbo" type="range" min="0" max="100" value="30">')
+    + `<div class="row">${F('Shadow blur: <span id="glshbv">30</span>px','<input id="glshb" type="range" min="0" max="80" value="30">')}${F('Shadow opacity: <span id="glshov">15</span>%','<input id="glsho" type="range" min="0" max="100" value="15">')}</div>`
+    + OUT('glout') + BTN('Copy CSS') + BTN('Reset','btn-ghost');
   const draw=()=>{ const rgb=hexToRgb($('#glc').value); const r=rgb[0],g=rgb[1],b=rgb[2];
     const o=+$('#glo').value/100, bl=+$('#glb').value, st=+$('#gls').value, rd=+$('#glr').value||0;
+    const bo=+$('#glbo').value/100, shb=+$('#glshb').value, sho=+$('#glsho').value/100;
     $('#glov').textContent=$('#glo').value; $('#glbv').textContent=bl; $('#glsv').textContent=st;
+    $('#glrv').textContent=rd; $('#glbov').textContent=$('#glbo').value; $('#glshbv').textContent=shb; $('#glshov').textContent=$('#glsho').value;
+    const shadow='0 8px '+shb+'px rgba(0, 0, 0, '+sho.toFixed(2)+')';
     const p=$('#glprev');
     p.style.background=`rgba(${r}, ${g}, ${b}, ${o})`; p.style.borderRadius=rd+'px';
-    p.style.boxShadow='0 4px 30px rgba(0, 0, 0, 0.1)';
+    p.style.boxShadow=shadow;
     p.style.backdropFilter=`blur(${bl}px) saturate(${st}%)`; p.style.webkitBackdropFilter=`blur(${bl}px) saturate(${st}%)`;
-    p.style.border=`1px solid rgba(${r}, ${g}, ${b}, 0.3)`;
+    p.style.border=`1px solid rgba(${r}, ${g}, ${b}, ${bo})`;
     p.style.color=(lum(r,g,b)>0.35&&o>0.4)?'#17191D':'#fff';
-    $('#glout').textContent=`background: rgba(${r}, ${g}, ${b}, ${o.toFixed(2)});\nborder-radius: ${rd}px;\nbox-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);\nbackdrop-filter: blur(${bl}px) saturate(${st}%);\n-webkit-backdrop-filter: blur(${bl}px) saturate(${st}%);\nborder: 1px solid rgba(${r}, ${g}, ${b}, 0.3);`; };
-  ['glc','glr','glo','glb','gls'].forEach(i=>$('#'+i).addEventListener('input',draw)); draw();
-  el.querySelector('.btn').onclick=()=>copyTxt($('#glout').textContent);
+    $('#glout').textContent='.glass-card {\n  background: rgba('+r+', '+g+', '+b+', '+o.toFixed(2)+');\n  backdrop-filter: blur('+bl+'px) saturate('+st+'%);\n  -webkit-backdrop-filter: blur('+bl+'px) saturate('+st+'%);\n  border: 1px solid rgba('+r+', '+g+', '+b+', '+bo.toFixed(2)+');\n  border-radius: '+rd+'px;\n  box-shadow: '+shadow+';\n}'; };
+  ['glc','glr','glo','glb','gls','glbo','glshb','glsho'].forEach(i=>$('#'+i).addEventListener('input',draw)); draw();
+  const bs=el.querySelectorAll('.btn');
+  bs[0].onclick=()=>copyTxt($('#glout').textContent);
+  bs[1].onclick=()=>{ $('#glc').value=DEF.c; $('#glo').value=DEF.o; $('#glb').value=DEF.b; $('#gls').value=DEF.s; $('#glr').value=DEF.r; $('#glbo').value=DEF.bo; $('#glshb').value=DEF.shb; $('#glsho').value=DEF.sho; draw(); tkToast('Glass settings reset'); };
 },
-
 
 tts(el){
   el.innerHTML = F('Text to speak', TA('tt2','Assalam o Alaikum, welcome to ABIX LAB.'))
@@ -956,20 +975,26 @@ vid2aud(el){
       v.onended=()=>rec.stop(); rec.start(); v.play(); }; };
 }
 });
+/* ---------- consistency check: registry <-> builders (Stage 2) ---------- */
+(function(){
+  var seen={}, dup=[], missing=[];
+  TOOLS.forEach(function(t){ if(seen[t.id]) dup.push(t.id); seen[t.id]=1; if(typeof BUILDERS[t.id]!=='function') missing.push(t.id); });
+  var extra=Object.keys(BUILDERS).filter(function(k){ return !seen[k]; });
+  if(dup.length||missing.length||extra.length) console.warn('[ToolsKit] consistency check:', {duplicateIds:dup, missingBuilders:missing, buildersWithoutRegistry:extra});
+  else console.info('[ToolsKit] consistency check passed: '+TOOLS.length+' tools, '+Object.keys(BUILDERS).length+' builders, no duplicate IDs.');
+})();
 render();
 
 })();
 
-/* ---------- bottom glass dock: spring-eased anchored pointer ---------- */
+/* ---------- bottom glass dock: active-section highlighting ---------- */
 (function () {
     "use strict";
     var dock = document.getElementById('dock');
     if (!dock) return;
-    var ptr = document.getElementById('dockPtr');
     var btns = Array.prototype.slice.call(dock.querySelectorAll('button'));
     function move(btn) {
         btns.forEach(function (x) { x.classList.toggle('sel', x === btn); });
-        if (ptr) ptr.style.transform = 'translateX(' + (btn.offsetLeft + btn.offsetWidth / 2 - 23) + 'px)';
     }
     btns.forEach(function (b) {
         b.addEventListener('click', function () {
@@ -979,5 +1004,19 @@ render();
         });
     });
     move(btns[0]);
+    /* Stage 2: keep the dock active state in sync while scrolling */
+    if ('IntersectionObserver' in window) {
+        var dockObs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (!e.isIntersecting) return;
+                var match = btns.filter(function (b) { return b.getAttribute('data-go') === '#' + e.target.id; })[0];
+                if (match) move(match);
+            });
+        }, { rootMargin: '-38% 0px -55% 0px' });
+        btns.forEach(function (b) {
+            var sec = document.querySelector(b.getAttribute('data-go'));
+            if (sec) dockObs.observe(sec);
+        });
+    }
     addEventListener('resize', function () { move(dock.querySelector('button.sel') || btns[0]); });
 })();

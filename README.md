@@ -53,6 +53,10 @@ smoother login ↔ register slide.
 | `index.html` | Page structure and content |
 | `style.css` | Premium theme, layout, animations |
 | `script.js` | Project CRUD store, auth, popup, typing/reveal effects, premium v3 enhancements |
+| `theme-init.js` | Applies the saved theme before first paint (no dark/light flash) |
+| `tools.js` | The 68-tool Tools Kit (registry + builders), tool modal, bottom glass dock |
+| `tools.css` | Tools Kit, Figma Design section, glass Get started button and dock styles |
+| `check-tools.mjs` | Dev-only consistency check: `node check-tools.mjs` asserts 68 tools = 68 builders, no duplicate IDs |
 | `pexels-pixabay-531880.jpg` | About-section photo |
 | `Deployment Link` | The live GitHub Pages URL |
 
@@ -82,11 +86,19 @@ popup) are driven by CSS variables so both themes stay pixel-consistent.
   Includes the css.glass-style **Glassmorphism Generator**.
 - New **#design** section (Figma / ZBR10, colour systems, Stitch, glass UI)
   and **#tools** section; nav and the bottom glass dock link to them.
-- Hero gained the glass **Get started** button; the bottom dock uses a
-  spring-eased anchored pointer (`--spring-easing` in `tools.css`).
+- Hero gained the glass **Get started** button; the bottom dock highlights
+  the active section (its red anchored-pointer ring was removed Nov 2026).
 - Bottom contrast fix: footer text now uses `--footer-muted` and the
   back-to-top button uses `--to-top-bg` / `--to-top-text` — the old light
   theme arrow measured 1.04:1 (invisible); it is now 18.25:1.
 - CSP note: `script-src` allows jsDelivr (pdf-lib, Tesseract, JsBarcode,
   marked, DOMPurify, js-beautify), `connect-src` allows the tools' live APIs,
   and `style-src` allows inline styles, which the tool builders' markup needs.
+
+**Stage 2 hardening (Nov 2026):** Hash Generator gained a Copy button and a
+clear Web Crypto fallback message; the Glassmorphism Generator reached
+css.glass parity (border-opacity and shadow controls, radius slider, Reset,
+`.glass-card`-wrapped CSS output); all copy actions now confirm via toast
+with a non-clipboard fallback; tool cards are keyboard-openable and the tool
+modal closes on Escape and carries dialog ARIA; the bottom dock's active
+state now follows scrolling; `prefers-reduced-motion` covers the dock.

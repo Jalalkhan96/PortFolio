@@ -12,7 +12,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-    <meta name="theme-color" content="#070708">
     <script src="theme-init.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="tools.css">
@@ -138,8 +137,8 @@
                 <div class="skill-card reveal bento-wide">
                     <div class="skill-icon" aria-hidden="true">✦</div>
                     <h3>Tools &amp; Workflow</h3>
-                    <p>Git/GitHub, VS Code, Android Studio, Jupyter — plus automation bots, scrapers and AI-assisted pipelines.</p>
-                    <div class="chip-row"><span>Git</span><span>GitHub</span><span>VS Code</span><span>Jupyter</span></div>
+                    <p>Git/GitHub, VS Code, Android Studio, Jupyter, Figma — plus automation bots, scrapers and AI-assisted pipelines.</p>
+                    <div class="chip-row"><span>Git</span><span>GitHub</span><span>VS Code</span><span>Jupyter</span><span>Figma</span></div>
                 </div>
             </div>
         </section>
@@ -154,7 +153,7 @@
                     <div class="skill-icon" aria-hidden="true">✦</div>
                     <h3>ZBR10 — Product Design</h3>
                     <p>11 complete product pages in one Figma file — AuraPods Max, SonicBuds Air, NebulaTab 11, PulseFit Watch 5 and more — one shared layout system with prices, ratings and feature cards.</p>
-                    <div class="chip-row"><span><a href="https://www.figma.com/design/Q98SmBf3debPUGkLi8pyEu/ZBR10-%E2%80%94-Product-Design" target="_blank" rel="noopener" style="color:inherit">Open in Figma →</a></span><span>11 pages</span><span>Components</span></div>
+                    <div class="chip-row"><span><a href="https://www.figma.com/design/Q98SmBf3debPUGkLi8pyEu/ZBR10-%E2%80%94-Product-Design" target="_blank" rel="noopener" style="color:inherit">Open in Figma →</a></span><span>11 pages</span><span>Components &amp; Variants</span><span>Auto Layout</span><span>Wireframing</span><span>Prototyping</span><span>Responsive Design</span></div>
                 </div>
                 <div class="skill-card reveal">
                     <div class="skill-icon" aria-hidden="true">◐</div>
@@ -277,7 +276,6 @@
     <button class="to-top" id="toTop" aria-label="Back to top" hidden>↑</button>
 
     <nav class="dock" id="dock" aria-label="Quick navigation">
-        <span class="anchored-pointer" id="dockPtr" aria-hidden="true"></span>
         <button type="button" data-go="#home" class="sel" aria-label="Home">🏠<span class="tip">Home</span></button>
         <button type="button" data-go="#projects" aria-label="Projects">📦<span class="tip">Projects</span></button>
         <button type="button" data-go="#design" aria-label="Design">🎨<span class="tip">Design</span></button>
@@ -390,7 +388,7 @@
 
 
     <!-- ============ TOOL MODAL ============ -->
-    <div class="modal" id="modal">
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="toolTitle">
         <div class="sheet">
             <button class="x" id="modalX" aria-label="Close">✕</button>
             <h3 id="toolTitle"></h3>
